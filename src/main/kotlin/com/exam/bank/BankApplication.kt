@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.boot.runApplication
 
 @SpringBootApplication(
-    exclude = [DataSourceAutoConfiguration::class]
+//    exclude = [DataSourceAutoConfiguration::class]
 )
 class BankApplication
 

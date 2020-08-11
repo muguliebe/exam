@@ -1,0 +1,10 @@
+spring:
+ devtools:
+   restart:
+    enabled: true
+ flyway:
+  enabled: false
+  ignore-missing-migrations: true
+  validate-on-migrate: true
+  encoding: UTF-8
+

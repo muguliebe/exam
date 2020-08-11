@@ -18,11 +18,26 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-//    implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.3")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-//    runtimeOnly("org.postgresql:postgresql")
+
+    // database: embedded postgresql
+    runtimeOnly("org.postgresql:postgresql")
+    implementation("com.opentable.components:otj-pg-embedded:0.13.3")
+    implementation("org.flywaydb:flyway-core:6.5.3")
+
+    // mybatis
+    implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.0")
+    implementation("org.mybatis:mybatis:3.5.1")
+    implementation("org.mybatis:mybatis-spring:2.0.1")
+    implementation("org.mybatis:mybatis-typehandlers-jsr310:1.0.2")
+
+    // etc
+    implementation("com.google.guava:guava:23.0")
+
+
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
