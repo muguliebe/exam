@@ -1,8 +1,10 @@
 package com.exam.fwk.custom.filter.aop
 
 import ch.qos.logback.classic.Logger
+import com.exam.bank.service.AuthService
 import com.exam.fwk.core.base.BaseException
 import com.exam.fwk.core.component.Area
+import com.exam.fwk.core.error.UnauthorizedException
 import com.exam.fwk.custom.service.TransactionService
 import com.exam.fwk.custom.util.DateUtils
 import org.apache.commons.io.IOUtils
@@ -33,8 +35,9 @@ class Advice {
         val log: Logger = LoggerFactory.getLogger(Advice::class.java) as Logger
     }
 
-    @Autowired lateinit var area: Area // Common 영역
-    @Autowired lateinit var serviceTransaction: TransactionService // Common 영역
+    @Autowired lateinit var area: Area                             // Common 영역
+    @Autowired lateinit var serviceTransaction: TransactionService // 거래내역 서비스
+    @Autowired lateinit var serviceAuth: AuthService               // 인증 서비스
 
     /**
      * 콘트롤러 전/후 처리
@@ -48,8 +51,9 @@ class Advice {
         val req = (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request
         val signatureName = "${pjp.signature.declaringType.simpleName}.${pjp.signature.name}"
 
-        // Set Common Area ---------------------------------------------------------------------------------------------
-        setCommonArea(req)
+        setAuth(req)       // 사용자 인증 처리
+        setCommonArea(req) // CommonArea 설정
+        validPermission()  // 접근 권한 처리
 
         // Main --------------------------------------------------------------------------------------------------------
         log.info("[${commons.gid}] >>>>>  controller start [$signatureName() from [${req.remoteAddr}] by ${req.method} ${req.requestURI}")
@@ -70,6 +74,21 @@ class Advice {
         return result
 
     }
+
+    /**
+     * 사용자 인증 처리
+     */
+    fun setAuth(req: HttpServletRequest) {
+
+        // JWT 로부터 CommonUser 를 decode
+        val jwt = req.getHeader("authorization") ?: return
+
+        val user = serviceAuth.decodeToken(jwt) ?: return
+
+        area.commons.user = user
+
+    }
+
 
     /**
      * Common Area 셋팅
@@ -100,6 +119,34 @@ class Advice {
                 body = body.replace("\n", "")
                 commons.body = body
             }
+        }
+
+
+
+
+    }
+
+    /**
+     * 사용자 인증
+     * - 권한이 있는 접근인지 검사
+     */
+    private fun validPermission() {
+
+        // 예외 URL 인지 체크 한다.
+        val path = area.commons.path
+        val isExceptUrl = when {
+            path == "/" -> true
+            path == "/error" -> true
+            path == "/ping" -> true
+            path == "/auth/sign-in" -> true
+            path == "/tr" -> true
+            else -> false
+        }
+
+        // 로그인이 되어있는지 체크
+        if (area.commons.user == null) {
+            log.debug("validPermission:[$path] not authorized")
+            throw UnauthorizedException()
         }
 
     }

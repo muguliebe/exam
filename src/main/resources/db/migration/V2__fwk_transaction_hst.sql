@@ -17,5 +17,5 @@ create table fwk_transaction_hst
     create_user_id   varchar(11),
     create_dt        timestamp with time zone not null
 );
-
-CREATE INDEX idx_tr_hst ON fwk_transaction_hst (tr_dy);
+comment on table fwk_transaction_hst is '거래내역';
+create index idx_tr_hst on fwk_transaction_hst (tr_dy);

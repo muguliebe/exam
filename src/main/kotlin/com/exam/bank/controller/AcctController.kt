@@ -1,5 +1,6 @@
 package com.exam.bank.controller
 
+import com.exam.bank.service.AcctService
 import com.exam.bank.service.AuthService
 import com.exam.fwk.core.base.BaseController
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,15 +14,12 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/acct")
 class AcctController : BaseController() {
 
-    @Autowired lateinit var serviceAuth: AuthService
+    @Autowired lateinit var serviceAcct: AcctService
 
     /**
-     * 로그인
+     * 계좌개설 단계 조회
      */
-    @PostMapping
-    fun signIn(@RequestBody input: SignInIn) = serviceAuth.signIn(input.email!!)
+    @GetMapping("/create-stage")
+    fun getCreateStage(): String = serviceAcct.getAcctStgCd(area.commons.user!!.userId)
 
-    data class SignInIn(
-            val email: String? = null
-    )
 }

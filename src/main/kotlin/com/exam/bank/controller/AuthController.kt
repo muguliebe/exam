@@ -18,7 +18,7 @@ class AuthController : BaseController() {
     /**
      * 로그인
      */
-    @PostMapping
+    @PostMapping("/sign-in")
     fun signIn(@RequestBody input: SignInIn) = serviceAuth.signIn(input.email!!)
 
     data class SignInIn(

@@ -19,6 +19,6 @@ data class TransactionHst(
         var queryString: String? = null,
         var body: String? = null,
         var errMsg: String? = null,
-        var createUserId: String? = null,
+        var createUserId: Int? = null,
         var createDt: OffsetDateTime? = null
 )

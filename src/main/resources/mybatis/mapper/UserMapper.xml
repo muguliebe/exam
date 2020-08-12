@@ -3,7 +3,7 @@
 
 <mapper namespace="com.exam.bank.repo.mybatis.UserMapper">
     <select id="selectOneUserId" resultType="ComUserMst">
-        select /* com@selectUser */
+        select /* com@selectUser@사용자 단건 조회 */
                user_id
              , email
           from com_user_mst a /* T. 사용자 마스터 */
@@ -11,7 +11,7 @@
     </select>
 
     <select id="selectListAllUser" resultType="ComUserMst">
-           select /* com@selectListAllUser */
+           select /* com@selectListAllUser@모든 사용자 조회 */
                user_id
              , email
           from com_user_mst a /* T. 사용자 마스터 */

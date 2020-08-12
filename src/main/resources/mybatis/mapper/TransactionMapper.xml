@@ -4,7 +4,7 @@
 <mapper namespace="com.exam.bank.repo.mybatis.TransactionMapper">
 
     <select id="selectListAllTransaction" resultType="TransactionHst">
-        select
+        select /* fwk@selectListAllTransaction@모든 거래내역 조회 */
              tr_dy as transactionDate
              , gid
              , method
@@ -20,13 +20,14 @@
              , error_message as errMsg
              , create_user_id
              , create_dt
-          from fwk_transaction_hst a
+          from fwk_transaction_hst a /* T. 거래내역 */
          where 1 = 1
            and 2 = 2
     </select>
 
     <insert id="insertTransaction" parameterType="TransactionHst">
-        insert into fwk_transaction_hst (
+        insert /* fwk@insertTransaction@거래내역 생성 */
+        into fwk_transaction_hst (
         tr_dy
         , gid
         , method

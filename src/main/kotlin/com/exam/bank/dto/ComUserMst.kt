@@ -1,6 +1,6 @@
 package com.exam.bank.dto
 
 data class ComUserMst(
-        val userId: String,
+        val userId: Int,
         val email: String
 )
