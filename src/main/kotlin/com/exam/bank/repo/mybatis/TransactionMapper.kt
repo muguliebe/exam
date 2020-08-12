@@ -1,10 +1,10 @@
 package com.exam.bank.repo.mybatis
 
 import com.exam.bank.dto.TransactionHst
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Repository
 
-@Component
+@Repository
 interface TransactionMapper {
-    fun selectAllTransaction(): List<TransactionHst>
+    fun selectListAllTransaction(): List<TransactionHst>
     fun insertTransaction(transaction: TransactionHst)
 }

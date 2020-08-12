@@ -1,16 +1,22 @@
 package com.exam.fwk.custom.util
 
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.OffsetDateTime
-import java.time.ZoneId
+import java.time.*
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 object DateUtils {
 
     private val zoneId: ZoneId = ZoneId.of("Asia/Seoul")
 
-    private fun now(): LocalDateTime = LocalDateTime.ofInstant(Instant.now(), zoneId)
+    fun now(): LocalDateTime = LocalDateTime.ofInstant(Instant.now(), zoneId)
+
+    fun nowDate(): Date = Date.from(now().atZone(zoneId).toInstant())
+
+    // localDateTime -> Date
+    fun fromLocalDateTimeToDate(from: LocalDateTime): Date = Date.from(from.atZone(zoneId).toInstant())
+
+    // localDate -> Date 포맷으로 리턴
+    fun fromLocalDateToDate(from: LocalDate): Date = Date.from(from.atStartOfDay(zoneId).toInstant())
 
     // 현재 일시를 지정한 포맷으로 리턴
     fun currentDateTimeFormat(format: String): String = now().format(DateTimeFormatter.ofPattern(format))

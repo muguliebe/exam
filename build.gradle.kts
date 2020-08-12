@@ -13,6 +13,7 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -37,7 +38,8 @@ dependencies {
 
     // etc
     implementation("com.google.guava:guava:23.0")
-
+    implementation("khttp:khttp:1.0.0")
+    implementation("com.auth0:java-jwt:3.8.1")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")

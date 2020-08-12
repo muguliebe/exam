@@ -18,7 +18,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.exam.bank.repo" level="debug" additivity="true"/>
+    <logger name="com.exam.bank.repo" level="info" additivity="true"/>
 
     <root level="info">
         <appender-ref ref="console"/>

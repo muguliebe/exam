@@ -9,6 +9,10 @@ import com.exam.fwk.core.error.BizException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
+
+/**
+ * 구조 테스트용 서비스
+ */
 @Service
 class TmpService : BaseService() {
 
@@ -21,7 +25,7 @@ class TmpService : BaseService() {
         return result
     }
 
-    fun getTrList(): List<TransactionHst> = mapperTr.selectAllTransaction()
+    fun getTrList(): List<TransactionHst> = mapperTr.selectListAllTransaction()
 
     fun getError() {
         throw BizException("sad")

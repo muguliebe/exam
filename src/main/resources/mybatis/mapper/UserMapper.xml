@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.exam.bank.repo.mybatis.UserMapper">
+    <select id="selectOneUserId" resultType="ComUserMst">
+        select /* com@selectUser */
+               user_id
+             , email
+          from com_user_mst a /* T. 사용자 마스터 */
+         where a.email = #{email}
+    </select>
+
+    <select id="selectListAllUser" resultType="ComUserMst">
+           select /* com@selectListAllUser */
+               user_id
+             , email
+          from com_user_mst a /* T. 사용자 마스터 */
+    </select>
+</mapper>

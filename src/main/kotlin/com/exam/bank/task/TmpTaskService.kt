@@ -1,10 +1,13 @@
 package com.exam.bank.task
 
 import com.exam.bank.repo.mybatis.TmpMapper
+import com.exam.bank.service.AuthService
+import com.exam.bank.service.UserService
 import com.exam.fwk.core.base.BaseService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
+import javax.annotation.PostConstruct
 import kotlin.random.Random
 
 @Service
@@ -19,7 +22,7 @@ class TmpTaskService : BaseService() {
             .map(charPool::get)
             .joinToString("")
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 60000)
     fun checkDbLive() {
         val result = mapperTmp.insertTmp(getRandomString(10))
         log.info("db check ok:$result")

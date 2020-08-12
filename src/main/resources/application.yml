@@ -1,8 +1,11 @@
+server.port: 5000
 app:
  vesion: 0.1
 spring:
  devtools:
    restart:
+    enabled: true
+   livereload:
     enabled: true
  flyway:
   enabled: false

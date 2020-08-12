@@ -11,7 +11,7 @@ create table fwk_transaction_hst
     elapsed          varchar(11),
     remote_ip        varchar(20),
     query_string     varchar(4000),
-    body             varchar(4000),
+    body             json,
     referrer         varchar(200),
     error_message    varchar(2000),
     create_user_id   varchar(11),

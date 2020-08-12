@@ -3,7 +3,7 @@
 
 <mapper namespace="com.exam.bank.repo.mybatis.TransactionMapper">
 
-    <select id="selectAllTransaction" resultType="TransactionHst">
+    <select id="selectListAllTransaction" resultType="TransactionHst">
         select
              tr_dy as transactionDate
              , gid
@@ -54,7 +54,7 @@
         , #{elapsed}
         , #{remoteIp}
         , #{queryString}
-        , #{body}
+        , #{body}::JSON
         , #{errMsg}
         , #{referrer}
         , #{createDt}

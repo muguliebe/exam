@@ -12,6 +12,5 @@ class TmpTest {
 
     @Test
     fun tmpTest() {
-        controllerTmp.checkDbLive()
     }
 }

@@ -13,15 +13,23 @@ import java.time.Duration
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+/**
+ * 거래내역 서비스
+ */
 @Service
 class TransactionService : BaseService() {
 
     @Autowired lateinit var mapper: TransactionMapper  // 거래내역
 
-    fun getTransactions() {
-        mapper.selectAllTransaction()
-    }
+    /**
+     * 모든 거래내역 조회
+     */
+    fun getTransactions() = mapper.selectListAllTransaction()
 
+
+    /**
+     * 거래내역 생성
+     */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     fun insertTransaction(commons: CommonArea) {
 

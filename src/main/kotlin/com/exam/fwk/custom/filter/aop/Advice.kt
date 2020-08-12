@@ -1,4 +1,4 @@
-package com.exam.fwk.custom.aop
+package com.exam.fwk.custom.filter.aop
 
 import ch.qos.logback.classic.Logger
 import com.exam.fwk.core.base.BaseException
@@ -90,7 +90,7 @@ class Advice {
             commons.referrer = URI(referrer).path
         }
 
-        if (req.method in arrayOf("POST", "PATCH", "DELETE") && commons.path != "upload-edm-files") {
+        if (req.method in arrayOf("POST", "PATCH", "DELETE")) {
             var body = IOUtils.toString(req.inputStream, Charset.forName("UTF-8"))
             if (body.isNotEmpty()) {
                 if (body.length > 4000) {
@@ -148,7 +148,6 @@ class Advice {
 
         // Init --------------------------------------------------------------------------------------------------------
         var result: Any? = null
-        val commons = area.commons
         val serviceFullName = (pjp.signature.declaringType.simpleName + "." + pjp.signature.name)
         val args = pjp.args.toList().joinToString(",")
         var elapsed: Long = 0
@@ -157,7 +156,7 @@ class Advice {
             "with $args"
         } else ""
 
-        log.info("[${commons.gid}] >>>>>  service start   [$serviceFullName()] $withArgs ")
+        log.info(" >>>>>  service start   [$serviceFullName()] $withArgs ")
 
         // Main --------------------------------------------------------------------------------------------------------
         try {
@@ -175,7 +174,7 @@ class Advice {
                 else -> ""
             }
 
-            log.info("[${commons.gid}] >>>>>  service   end   [$serviceFullName()] [${elapsed}ms] $returnForLog")
+            log.info(" >>>>>  service   end   [$serviceFullName()] [${elapsed}ms] $returnForLog")
         }
 
         // End ---------------------------------------------------------------------------------------------------------
