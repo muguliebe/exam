@@ -1,10 +1,11 @@
-package com.exam.bank.config.mybatis
+package com.exam.fwk.custom.config.db.mybatis
 
 import ch.qos.logback.classic.Logger
 import org.apache.ibatis.session.SqlSessionFactory
 import org.mybatis.spring.SqlSessionFactoryBean
 import org.mybatis.spring.annotation.MapperScan
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary

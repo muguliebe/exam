@@ -14,7 +14,7 @@
     <typeAliases>
         <typeAlias alias="HashMap" type="java.util.HashMap"/>
         <typeAlias alias="List" type="java.util.List"/>
-        <typeAlias alias="CamelMap" type="com.exam.bank.config.mybatis.CamelMap"/>
+        <typeAlias alias="CamelMap" type="com.exam.fwk.core.mybatis.CamelMap"/>
         <package name="com.exam.bank.dto"/>
     </typeAliases>
 

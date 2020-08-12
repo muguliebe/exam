@@ -1,4 +1,4 @@
-package com.exam.bank.config
+package com.exam.fwk.custom.config.db
 
 import org.flywaydb.core.Flyway
 import org.springframework.beans.factory.annotation.Autowired

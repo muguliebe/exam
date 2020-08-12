@@ -1,4 +1,4 @@
-package com.exam.bank.config.mybatis
+package com.exam.fwk.custom.config.db.mybatis
 
 import ch.qos.logback.classic.Logger
 import org.mybatis.spring.SqlSessionFactoryBean

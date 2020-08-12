@@ -1,4 +1,4 @@
-package com.exam.bank.config
+package com.exam.fwk.custom.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
