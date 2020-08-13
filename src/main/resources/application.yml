@@ -1,6 +1,7 @@
 server.port: 5000
 app:
- vesion: 0.1
+ version: 0.1
+ host: localhost:5000
 spring:
  devtools:
    restart:
@@ -12,8 +13,6 @@ spring:
   ignore-missing-migrations: true
   validate-on-migrate: true
   encoding: UTF-8
- datasource:
-   initi-sql: "set time zone 'Asia/Seoul'"
 db:
  common:
   minIdle: 5

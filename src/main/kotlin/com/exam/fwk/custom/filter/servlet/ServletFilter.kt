@@ -3,8 +3,6 @@ package com.exam.fwk.custom.filter.servlet
 import ch.qos.logback.classic.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Configuration
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import javax.servlet.*
 import javax.servlet.http.HttpServletRequest
 
@@ -26,32 +24,7 @@ class ServletFilter : Filter {
 
     override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
         val requestWrapper = HttpRequestWrapper(request as HttpServletRequest)
-        val uri = requestWrapper.requestURI
-
-        if (log.isTraceEnabled) {
-            log.trace("ServletFilter] Start by {} when {}", request.getRemoteAddr(), uri)
-        }
-
-        val reader = BufferedReader(InputStreamReader(requestWrapper.inputStream))
-        val result = StringBuilder()
-
-        var line: String?
-        do {
-            line = reader.readLine()
-            if (line == null)
-                break
-            result.append(line)
-        } while (true)
-
-        requestWrapper.setAttribute("bodyContent", result.toString())
-        requestWrapper.setAttribute("originUri", uri)
-
-        if (log.isTraceEnabled) {
-            log.trace("ServletFilter] End")
-        }
-
         chain.doFilter(requestWrapper, response)
-
     }
 
 }

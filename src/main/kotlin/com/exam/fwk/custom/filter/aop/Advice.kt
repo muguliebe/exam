@@ -7,7 +7,6 @@ import com.exam.fwk.core.component.Area
 import com.exam.fwk.core.error.UnauthorizedException
 import com.exam.fwk.custom.service.TransactionService
 import com.exam.fwk.custom.util.DateUtils
-import org.apache.commons.io.IOUtils
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Component
 import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletRequestAttributes
 import java.net.URI
-import java.nio.charset.Charset
 import java.time.Duration
 import java.time.OffsetDateTime
 import java.time.ZoneId
@@ -47,8 +45,8 @@ class Advice {
 
         // Init --------------------------------------------------------------------------------------------------------
         var result: Any? = null
-        val commons = area.commons
         val req = (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request
+        val commons = area.commons
         val signatureName = "${pjp.signature.declaringType.simpleName}.${pjp.signature.name}"
 
         setAuth(req)       // 사용자 인증 처리
@@ -109,20 +107,18 @@ class Advice {
             commons.referrer = URI(referrer).path
         }
 
-        if (req.method in arrayOf("POST", "PATCH", "DELETE")) {
-            var body = IOUtils.toString(req.inputStream, Charset.forName("UTF-8"))
-            if (body.isNotEmpty()) {
-                if (body.length > 4000) {
-                    body = body.substring(0..4000)
-                }
-                body = org.apache.commons.lang3.StringUtils.chomp(body)
-                body = body.replace("\n", "")
-                commons.body = body
-            }
-        }
-
-
-
+//        val isExcept = req.contentType.toLowerCase().indexOf("multipart/form-data") > -1
+//        if (req.method in arrayOf("POST", "PATCH", "DELETE") && !isExcept) {
+//            var body = IOUtils.toString(req.inputStream, Charset.forName("UTF-8"))
+//            if (body.isNotEmpty()) {
+//                if (body.length > 4000) {
+//                    body = body.substring(0..4000)
+//                }
+//                body = org.apache.commons.lang3.StringUtils.chomp(body)
+//                body = body.replace("\n", "")
+//                commons.body = body
+//            }
+//        }
 
     }
 
@@ -140,8 +136,12 @@ class Advice {
             path == "/ping" -> true
             path == "/auth/sign-in" -> true
             path == "/tr" -> true
+            path.startsWith("/tmp") -> true
             else -> false
         }
+
+        if (isExceptUrl)
+            return
 
         // 로그인이 되어있는지 체크
         if (area.commons.user == null) {

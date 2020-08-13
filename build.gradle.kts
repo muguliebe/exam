@@ -17,13 +17,19 @@ repositories {
 }
 
 dependencies {
+
+    // spring
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-aop")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+    // kotlin
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    implementation("org.jetbrains.kotlin:kotlin-noarg")
 
     // database: embedded postgresql
     runtimeOnly("org.postgresql:postgresql")
@@ -36,10 +42,16 @@ dependencies {
     implementation("org.mybatis:mybatis-spring:2.0.1")
     implementation("org.mybatis:mybatis-typehandlers-jsr310:1.0.2")
 
+    // swagger
+    implementation("io.springfox:springfox-swagger2:2.9.2")
+    implementation("io.springfox:springfox-swagger-ui:2.9.2")
+
     // etc
     implementation("com.google.guava:guava:23.0")
     implementation("khttp:khttp:1.0.0")
     implementation("com.auth0:java-jwt:3.8.1")
+    implementation("com.google.code.gson:gson:2.8.5")
+
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")

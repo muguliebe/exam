@@ -1,15 +1,13 @@
 package com.exam.fwk.custom.filter.servlet
 
-import org.apache.commons.io.IOUtils
-import java.io.ByteArrayInputStream
-import java.io.IOException
-import java.io.InputStream
+import org.springframework.util.StreamUtils
+import java.io.*
 import java.util.*
 import javax.servlet.ReadListener
 import javax.servlet.ServletInputStream
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletRequestWrapper
-import kotlin.collections.HashMap
+
 
 /**
  * 커스텀 HttpRequest
@@ -24,7 +22,7 @@ constructor(request: HttpServletRequest) : HttpServletRequestWrapper(request) {
 
     init {
         val inputStream = super.getInputStream()
-        bodyData = IOUtils.toByteArray(inputStream)
+        bodyData = StreamUtils.copyToByteArray(inputStream)
     }
 
     fun addHeader(name: String, value: String) {
@@ -60,9 +58,12 @@ constructor(request: HttpServletRequest) : HttpServletRequestWrapper(request) {
     }
 
     @Throws(IOException::class)
-    override fun getInputStream(): ServletInputStream = ServletImpl(ByteArrayInputStream(bodyData))
+    override fun getInputStream(): ServletInputStream = ServletInputStreamImpl(ByteArrayInputStream(bodyData))
 
-    internal inner class ServletImpl(private val inputStream: InputStream) : ServletInputStream() {
+    @Throws(IOException::class)
+    override fun getReader(): BufferedReader = BufferedReader(InputStreamReader(ByteArrayInputStream(bodyData)))
+
+    internal inner class ServletInputStreamImpl(private val inputStream: InputStream) : ServletInputStream() {
 
         @Throws(IOException::class)
         override fun read(): Int = inputStream.read()
@@ -70,8 +71,8 @@ constructor(request: HttpServletRequest) : HttpServletRequestWrapper(request) {
         @Throws(IOException::class)
         override fun read(b: ByteArray): Int = inputStream.read(b)
 
-        override fun isFinished(): Boolean = false
-        override fun isReady(): Boolean = false
+        override fun isFinished(): Boolean = inputStream.available() == 0
+        override fun isReady(): Boolean = true
         override fun setReadListener(listener: ReadListener) {}
 
     }

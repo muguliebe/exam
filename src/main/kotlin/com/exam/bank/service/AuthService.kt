@@ -41,7 +41,7 @@ class AuthService : BaseService() {
 
         // Init --------------------------------------------------------------------------------------------------------
         val resultUser = ComUser()
-        val selectedUser = mapperUser.selectOneUserId(email)
+        val selectedUser = mapperUser.selectOneUserByEmail(email)
 
         // Valid -------------------------------------------------------------------------------------------------------
         if (selectedUser == null) {

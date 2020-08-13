@@ -2,10 +2,22 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.exam.bank.repo.mybatis.UserMapper">
-    <select id="selectOneUserId" resultType="ComUserMst">
-        select /* com@selectUser@사용자 단건 조회 */
+
+    <select id="selectOneUserById" resultType="ComUserMst">
+        select /* com@selectUserId@사용자 단건 조회 by ID*/
                user_id
              , email
+             , user_nm
+          from com_user_mst a /* T. 사용자 마스터 */
+         where a.user_id = ${userId}
+    </select>
+
+
+    <select id="selectOneUserByEmail" resultType="ComUserMst">
+        select /* com@selectUserByEmail@사용자 단건 조회 by Email */
+               user_id
+             , email
+             , user_nm
           from com_user_mst a /* T. 사용자 마스터 */
          where a.email = #{email}
     </select>
@@ -14,6 +26,7 @@
            select /* com@selectListAllUser@모든 사용자 조회 */
                user_id
              , email
+             , user_nm
           from com_user_mst a /* T. 사용자 마스터 */
     </select>
 </mapper>

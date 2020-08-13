@@ -16,6 +16,7 @@
         <typeAlias alias="List" type="java.util.List"/>
         <typeAlias alias="CamelMap" type="com.exam.fwk.core.mybatis.CamelMap"/>
         <package name="com.exam.bank.dto"/>
+        <package name="com.exam.bank.entity"/>
     </typeAliases>
 
     <typeHandlers>

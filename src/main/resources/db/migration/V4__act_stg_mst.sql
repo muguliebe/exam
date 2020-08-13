@@ -3,7 +3,7 @@ create table act_stg_mst
 (
     user_id        integer constraint act_stg_mst_pk primary key,
     acct_stg_cd    varchar(2),
-    create_user_id bigint,
+    create_user_id integer,
     update_user_id integer,
     create_dt      timestamp with time zone default CURRENT_TIMESTAMP not null,
     update_dt      timestamp with time zone

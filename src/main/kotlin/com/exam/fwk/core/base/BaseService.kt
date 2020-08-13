@@ -12,11 +12,11 @@ abstract class BaseService : BaseObject() {
 
     protected final val log = LoggerFactory.getLogger(this::class.java) as Logger
 
-    @Autowired lateinit var commonReal: Area
+    @Autowired lateinit var areaReal: Area
 
-    var commons = Area()
+    var area = Area()
         get() = if (RequestContextHolder.getRequestAttributes() != null) {
-            commonReal
+            areaReal
         } else {
             field
         }

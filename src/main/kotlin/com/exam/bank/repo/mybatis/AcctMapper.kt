@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository
 interface AcctMapper {
 
     fun selectOneAcctStg(@Param("userId") userId: Int): String?
+    fun insertAcctStg(@Param("userId") userId: Int, @Param("acctStgCd") stgCd: String)
+    fun updateAcctStg(@Param("userId") userId: Int, @Param("acctStgCd") stgCd: String)
 
 }

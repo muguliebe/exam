@@ -2,6 +2,7 @@ package com.exam.bank.service
 
 import com.exam.bank.dto.GetTmpListOut
 import com.exam.bank.dto.TransactionHst
+import com.exam.bank.repo.jpa.UserRepo
 import com.exam.bank.repo.mybatis.TmpMapper
 import com.exam.bank.repo.mybatis.TransactionMapper
 import com.exam.fwk.core.base.BaseService
@@ -18,6 +19,7 @@ class TmpService : BaseService() {
 
     @Autowired lateinit var mapperTmp: TmpMapper
     @Autowired lateinit var mapperTr: TransactionMapper
+    @Autowired lateinit var repoUser: UserRepo
 
     fun getTmpList(): List<GetTmpListOut> {
         val result = mapperTmp.selectListTmp()
@@ -29,6 +31,16 @@ class TmpService : BaseService() {
 
     fun getError() {
         throw BizException("sad")
+    }
+
+    fun testJpa() = repoUser.findAll()
+
+    fun comment() {
+        // Init --------------------------------------------------------------------------------------------------------
+
+        // Main --------------------------------------------------------------------------------------------------------
+
+        // End ---------------------------------------------------------------------------------------------------------
     }
 
 }

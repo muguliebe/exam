@@ -1,25 +1,38 @@
 package com.exam.bank.controller
 
+import com.exam.bank.dto.AuthIcFirstIn
+import com.exam.bank.dto.AuthIcSecondIn
+import com.exam.bank.dto.ReqExtBankIn
 import com.exam.bank.service.AcctService
-import com.exam.bank.service.AuthService
 import com.exam.fwk.core.base.BaseController
+import io.swagger.annotations.Api
+import io.swagger.annotations.ApiOperation
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
 
-/**
- * 계좌 콘트롤러
- */
 @RestController
 @RequestMapping("/acct")
+@Api(description = "계좌")
 class AcctController : BaseController() {
 
-    @Autowired lateinit var serviceAcct: AcctService
+    @Autowired lateinit var serviceAcct: AcctService // 계좌 서비스
 
-    /**
-     * 계좌개설 단계 조회
-     */
-    @GetMapping("/create-stage")
+    @GetMapping("/auth-stage")
+    @ApiOperation(value = "계좌개설 단계 조회")
     fun getCreateStage(): String = serviceAcct.getAcctStgCd(area.commons.user!!.userId)
+
+    @PostMapping("/auth/a1")
+    @ApiOperation(value = "신분증 인증 1단계(이미지 제출)")
+    fun authIcFirst(@RequestBody input: AuthIcFirstIn) = serviceAcct.authIcFirst(input)
+
+    @PostMapping("/auth/a2")
+    @ApiOperation(value = "신분증 인증 2단계(교정본 제출)")
+    fun authIcSecond(@RequestBody input: AuthIcSecondIn) = serviceAcct.authIcSecond(input)
+
+    @PostMapping("/auth/b1")
+    @ApiOperation(value = "이체 인증 요청")
+    fun reqExtBank(@RequestBody input: ReqExtBankIn) = serviceAcct.reqExtBank(input)
+
 
 }

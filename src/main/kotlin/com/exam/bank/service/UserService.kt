@@ -2,11 +2,8 @@ package com.exam.bank.service
 
 import com.exam.bank.repo.mybatis.UserMapper
 import com.exam.fwk.core.base.BaseService
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
-import javax.annotation.PostConstruct
 
 @Service
 class UserService(
@@ -27,7 +24,7 @@ class UserService(
                         log.info("")
                         log.info("========= 모든 사용자 Info Start ======================================================================")
                     }
-                    log.info("Id[${user.userId}] email[${user.email}] ${user.jwt}")
+                    log.info("id[${user.userId}] email[${user.email}] jwt= ${user.jwt}")
                 }
         log.info("========= 모든 사용자 Info End   ======================================================================\n")
     }
@@ -36,5 +33,10 @@ class UserService(
      * 모든 사용자 조회
      */
     fun getAllUser() = mapperUser.selectListAllUser()
+
+    /**
+     * 사용자 단건 조회 by ID
+     */
+    fun getUserById(id:Int) = mapperUser.selectOneUserById(id)
 
 }

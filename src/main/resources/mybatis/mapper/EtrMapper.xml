@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.exam.bank.repo.mybatis.EtrMapper">
+    <select id="selectOne" resultType="String">
+        select /* com@selectOne@대외 거래 단건 조회 */
+               a.tr_cd
+             , a.seq
+             , a.tr_stat_cd
+             , a.tr_res_code
+             , a.create_user_id
+             , a.update_user_id
+             , a.create_dt
+             , a.update_dt
+          from com_etr_mst a /* T. 대외 거래 마스터 */
+         where a.tr_cd = #{trCd}
+           and a.seq = #{seq}
+    </select>
+
+    <insert id="insert">
+        insert /* com@insert@대외 거래 생성 */
+          into com_etr_mst /* T. 대외 거래 마스터 */
+          ( tr_cd
+
+          )
+        values ( #{userId}
+               , #{acctStgCd}
+               )
+    </insert>
+
+    <insert id="update">
+        update /* com@update@대외 거래 수정 */
+               com_etr_mst /* T. 대외 거래 마스터 */
+--            set
+--          where user_id = #{userId}
+    </insert>
+
+</mapper>

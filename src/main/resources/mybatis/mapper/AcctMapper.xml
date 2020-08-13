@@ -1,11 +1,30 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.exam.bank.repo.mybatis.AcctMapper">
     <select id="selectOneAcctStg" resultType="String">
-        select /* act@selectOneAcctStg@계좌인증단계조회 */
+        select /* act@selectOneAcctStg@계좌 인증단계 조회 */
                acct_stg_cd
           from act_stg_mst a /* T. 계좌 인증 마스터 */
          where user_id = #{userId}
     </select>
+
+    <insert id="insertAcctStg">
+        insert /* act@insertAcctStg@계좌 인증단계 생성 */
+          into act_stg_mst /* T. 계좌 인증 마스터 */
+          ( user_id
+          , acct_stg_cd
+          )
+        values ( #{userId}
+               , #{acctStgCd}
+               )
+    </insert>
+
+    <insert id="updateAcctStg">
+        update /* act@updateAcctStg@계좌 인증단계 수정 */
+               act_stg_mst /* T. 계좌 인증 마스터 */
+           set acct_stg_cd = #{acctStgCd}
+         where user_id = #{userId}
+    </insert>
+
 </mapper>
