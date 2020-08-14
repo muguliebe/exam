@@ -1,4 +1,4 @@
-package com.exam.bank
+package com.exam.tmp
 
 import org.junit.jupiter.api.Test
 

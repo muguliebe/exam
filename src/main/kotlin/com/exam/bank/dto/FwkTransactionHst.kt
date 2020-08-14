@@ -5,7 +5,7 @@ import java.time.LocalDate
 import java.time.OffsetDateTime
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-data class TransactionHst(
+data class FwkTransactionHst(
         var transactionDate: LocalDate = LocalDate.now(), // 거래 일자
         var gid: String = "",                             // 글로벌 ID
         var method: String = "",                          // HTTP Method ( GET, PUT.. )

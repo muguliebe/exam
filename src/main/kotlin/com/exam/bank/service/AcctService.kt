@@ -271,7 +271,7 @@ class AcctService : BaseService() {
         )
 
         if (res.statusCode != 200) {
-            throw BizException("고객 정보 저장 중 에러 발생. 재시도 해주세요.")
+            throw BizException("수신 계좌 생성 중 에러 발생. 재시도 해주세요.")
         }
 
         // End ---------------------------------------------------------------------------------------------------------
@@ -281,7 +281,7 @@ class AcctService : BaseService() {
     }
 
     data class AuthWordIn(
-            val etcCtn: String
+            var etcCtn: String = ""
     )
 
 }

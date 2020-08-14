@@ -1,3 +1,58 @@
-http://localhost:8080/tmp/test
+### 거래내역 조회
+GET http://localhost:5000/tr
+
+### 로그인 -> 토큰 정보
+POST http://localhost:5000/auth/sign-in
+Content-Type: application/json
+
+{
+  "email": "1@a.com"
+}
+
+### 계좌 개설 단계 조회
+GET http://localhost:5000/acct/auth-stage
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb20uZXhhbSIsImV4cCI6MTY4Mzc5Njc2NSwidXNlcklkIjoxLCJpYXQiOjE1OTczOTY3NjUsImVtYWlsIjoiMUBhLmNvbSJ9.ikabs6w8QPJ92eIInlTlGlAECHK-ntJ-O3lZbtAZCjI
+
+### 신분증 인증: 1단계(이미지 제출)
+POST http://localhost:5000/acct/auth/a1
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb20uZXhhbSIsImV4cCI6MTY4Mzc5Njc2NSwidXNlcklkIjoxLCJpYXQiOjE1OTczOTY3NjUsImVtYWlsIjoiMUBhLmNvbSJ9.ikabs6w8QPJ92eIInlTlGlAECHK-ntJ-O3lZbtAZCjI
+Content-Type: application/json
+
+{
+  "image": "test"
+}
+
+### 신분증 인증: 2단계(교정 정보 제출)
+POST http://localhost:5000/acct/auth/a2
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb20uZXhhbSIsImV4cCI6MTY4Mzc5Njc2NSwidXNlcklkIjoxLCJpYXQiOjE1OTczOTY3NjUsImVtYWlsIjoiMUBhLmNvbSJ9.ikabs6w8QPJ92eIInlTlGlAECHK-ntJ-O3lZbtAZCjI
+Content-Type: application/json
+
+{
+  "name": "test",
+  "no": 123123123,
+  "ci": "123123123123"
+}
+
+### 타행 계좌 이체 요청
+POST http://localhost:5000/acct/auth/b1
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb20uZXhhbSIsImV4cCI6MTY4Mzc5Njc2NSwidXNlcklkIjoxLCJpYXQiOjE1OTczOTY3NjUsImVtYWlsIjoiMUBhLmNvbSJ9.ikabs6w8QPJ92eIInlTlGlAECHK-ntJ-O3lZbtAZCjI
+Content-Type: application/json
+
+{
+  "bankCd": "001",
+  "acctNo": "123123123"
+}
 
 ###
+
+### 단어 인증
+POST http://localhost:5000/acct/auth/c1
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb20uZXhhbSIsImV4cCI6MTY4Mzc5Njc2NSwidXNlcklkIjoxLCJpYXQiOjE1OTczOTY3NjUsImVtYWlsIjoiMUBhLmNvbSJ9.ikabs6w8QPJ92eIInlTlGlAECHK-ntJ-O3lZbtAZCjI
+Content-Type: application/json
+
+{
+  "etcCtn": "001a"
+}
+
+###
+

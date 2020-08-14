@@ -51,6 +51,7 @@ dependencies {
     implementation("khttp:khttp:1.0.0")
     implementation("com.auth0:java-jwt:3.8.1")
     implementation("com.google.code.gson:gson:2.8.5")
+    implementation("org.apache.httpcomponents:httpclient:4.5.9")
 
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {

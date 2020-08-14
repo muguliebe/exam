@@ -1,6 +1,6 @@
 package com.exam.fwk.custom.service
 
-import com.exam.bank.dto.TransactionHst
+import com.exam.bank.dto.FwkTransactionHst
 import com.exam.bank.repo.mybatis.TransactionMapper
 import com.exam.fwk.core.base.BaseService
 import com.exam.fwk.custom.pojo.CommonArea
@@ -34,7 +34,7 @@ class TransactionService : BaseService() {
     fun insertTransaction(commons: CommonArea) {
 
         // set insert input
-        val tr = TransactionHst()
+        val tr = FwkTransactionHst()
         tr.transactionDate = LocalDate.parse(commons.date)
         tr.gid = commons.gid
         tr.method = commons.method

@@ -1,7 +1,7 @@
 package com.exam.bank.service
 
 import com.exam.bank.dto.GetTmpListOut
-import com.exam.bank.dto.TransactionHst
+import com.exam.bank.dto.FwkTransactionHst
 import com.exam.bank.repo.jpa.UserRepo
 import com.exam.bank.repo.mybatis.TmpMapper
 import com.exam.bank.repo.mybatis.TransactionMapper
@@ -27,7 +27,7 @@ class TmpService : BaseService() {
         return result
     }
 
-    fun getTrList(): List<TransactionHst> = mapperTr.selectListAllTransaction()
+    fun getTrList(): List<FwkTransactionHst> = mapperTr.selectListAllTransaction()
 
     fun getError() {
         throw BizException("sad")

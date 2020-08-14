@@ -76,7 +76,7 @@ class AuthService : BaseService() {
             return null          //    THEN null
 
         val decoded = verifier.verify(jwt)
-        val userId = decoded.getClaim("userId").asString().toInt()
+        val userId = decoded.getClaim("userId").asInt()
         val email = decoded.getClaim("email").asString()
 
         return ComUser(
