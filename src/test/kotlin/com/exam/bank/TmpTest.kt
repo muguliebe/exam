@@ -6,7 +6,6 @@ class TmpTest {
 
     @Test
     fun tmpTest() {
-        val a = "A0"
-        println(a<="A1")
+
     }
 }

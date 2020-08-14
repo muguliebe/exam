@@ -2,7 +2,7 @@ package com.exam.bank.controller
 
 import com.exam.bank.dto.AuthIcFirstIn
 import com.exam.bank.dto.AuthIcSecondIn
-import com.exam.bank.dto.ReqExtBankIn
+import com.exam.bank.dto.T1Body
 import com.exam.bank.service.AcctService
 import com.exam.fwk.core.base.BaseController
 import io.swagger.annotations.Api
@@ -31,8 +31,12 @@ class AcctController : BaseController() {
     fun authIcSecond(@RequestBody input: AuthIcSecondIn) = serviceAcct.authIcSecond(input)
 
     @PostMapping("/auth/b1")
-    @ApiOperation(value = "이체 인증 요청")
-    fun reqExtBank(@RequestBody input: ReqExtBankIn) = serviceAcct.reqExtBank(input)
+    @ApiOperation(value = "타행 계좌 인증 요청")
+    fun procExtAcctAuth(@RequestBody input: T1Body) = serviceAcct.procExtAcctAuth(input)
+
+    @PostMapping("/auth/c1")
+    @ApiOperation(value = "단어 인증")
+    fun authWord(@RequestBody input: AcctService.AuthWordIn) = serviceAcct.authWord(input)
 
 
 }

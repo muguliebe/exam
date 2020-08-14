@@ -68,7 +68,7 @@ class PublicDataSource {
         properties["hibernate.physical_naming_strategy"] = "org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy"
         properties["hibernate.cache.use_second_level_cache"] = false
         properties["hibernate.cache.use_query_cache"] = false
-        properties["hibernate.show_sql"] = true
+        properties["hibernate.show_sql"] = false
         properties["javax.persistence.validation.mode"] = "none"
 
         val em = LocalContainerEntityManagerFactoryBean()

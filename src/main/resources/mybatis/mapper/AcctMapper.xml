@@ -9,6 +9,14 @@
          where user_id = #{userId}
     </select>
 
+    <select id="selectForUpdate" resultType="String">
+        select /* act@selectForUpdate@계좌 인증단계 조회 For Update */
+               acct_stg_cd
+          from act_stg_mst a /* T. 계좌 인증 마스터 */
+         where user_id = #{userId}
+         for update
+    </select>
+
     <insert id="insertAcctStg">
         insert /* act@insertAcctStg@계좌 인증단계 생성 */
           into act_stg_mst /* T. 계좌 인증 마스터 */
@@ -24,6 +32,13 @@
         update /* act@updateAcctStg@계좌 인증단계 수정 */
                act_stg_mst /* T. 계좌 인증 마스터 */
            set acct_stg_cd = #{acctStgCd}
+         where user_id = #{userId}
+    </insert>
+
+    <insert id="updateEtcCtn">
+        update /* act@updateAcctStg@계좌 인증단계 단어 수정 */
+               act_stg_mst /* T. 계좌 인증 마스터 */
+           set etc_ctn = #{etcCtn}
          where user_id = #{userId}
     </insert>
 

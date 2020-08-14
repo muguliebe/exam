@@ -2,37 +2,141 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.exam.bank.repo.mybatis.EtrMapper">
-    <select id="selectOne" resultType="String">
-        select /* com@selectOne@대외 거래 단건 조회 */
-               a.tr_cd
-             , a.seq
+
+    <update id="updateListEtrCancel" >
+        update /* com@updateListByUserAndTrId@대외 거래 전문 취소 by userId, trId */
+               com_etr_mst a /* T. 대외 거래 마스터 */
+           set tr_stat_cd = '04'
+         where 1 = 1
+           and 2 = 2
+           and a.tr_stat_cd not in ('02', '04', '05') /* 거래상태코드 [01:요청, 02: 전송, 03:타임아웃, 04:취소, 05:수신] */
+           and a.tr_res_cd not in ('01', '02')        /* 거래결과코드 [00:진행중, 01:성공, 02:실패] */
+           and a.tr_id = #{trId}
+           and a.user_id = #{userId}
+    </update>
+
+    <update id="updateOneEtrCancelBySeq" >
+        update /* com@updateOneEtrCancelBySeq@대외 거래 전문 단건 취소 by seq */
+               com_etr_mst a /* T. 대외 거래 마스터 */
+           set tr_stat_cd = '04'
+         where a.seq = #{seq}
+    </update>
+
+
+    <update id="updateListEtrCancelBySeqList" >
+        update /* com@updateListEtrCancelBySeqList@대외 거래 전문 리스트 취소 by seq list */
+               com_etr_mst a /* T. 대외 거래 마스터 */
+           set tr_stat_cd = '04'
+         where 1 = 1
+           and 2 = 2
+           and a.tr_stat_cd not in ('02', '04', '05') /* 거래상태코드 [01:요청, 02: 전송, 03:타임아웃, 04:취소, 05:수신] */
+           <if test="listSeq.size > 0">
+               and a.seq in
+               <foreach collection="listSeq" item="seq" index="index" open="(" separator="," close=")">
+                   #{seq}
+               </foreach>
+           </if>
+    </update>
+
+    <update id="updateEtrTimeout" >
+        update /* com@updateTimeout@대외 거래 전문 타임아웃으로 변경 */
+               com_etr_mst a      /* T. 대외 거래 마스터 */
+           set tr_stat_cd = '03'  /* 거래상태코드 [01:요청, 02: 전송, 03:타임아웃, 04:취소, 05:수신] */
+         where a.seq = #{seq}
+    </update>
+
+    <update id="updateEtrErr" >
+        update /* com@updateEtrErr@대외 거래 전문 에러로 변경 */
+               com_etr_mst a      /* T. 대외 거래 마스터 */
+           set tr_stat_cd = '05'  /* 거래상태코드 [01:요청, 02: 전송, 03:타임아웃, 04:취소, 05:수신] */
+             , tr_res_cd  = '02'  /* 거래결과코드 [00:진행중, 01:성공, 02:실패] */
+         where a.seq = #{seq}
+    </update>
+
+    <update id="updateEtrSending" >
+        update /* com@updateEtrSending@대외 거래 전문 전송중으로 변경 */
+               com_etr_mst a      /* T. 대외 거래 마스터 */
+           set tr_stat_cd = '02'  /* 거래상태코드 [01:요청, 02: 전송, 03:타임아웃, 04:취소, 05:수신] */
+             , tr_res_cd  = '00'  /* 거래결과코드 [00:진행중, 01:성공, 02:실패] */
+         where a.seq = #{seq}
+    </update>
+
+    <update id="updateEtrSuccess" >
+        update /* com@updateEtrSuccess@대외 거래 전문 성공 변경 */
+               com_etr_mst a /* T. 대외 거래 마스터 */
+           set tr_stat_cd = '05'  /* 거래상태코드 [01:요청, 02: 전송, 03:타임아웃, 04:취소, 05:수신] */
+             , tr_res_cd  = '01'  /* 거래결과코드 [00:진행중, 01:성공, 02:실패] */
+         where a.seq = #{seq}
+    </update>
+
+    <select id="selectListReqTr" resultType="ComEtrMst">
+        select /* com@selectListReqTr@대외 거래 전문 발송대상 조회 */
+               a.seq
+             , a.tr_dy
+             , a.tr_id
              , a.tr_stat_cd
-             , a.tr_res_code
+             , a.tr_res_cd
+             , a.user_id
+             , a.body
              , a.create_user_id
-             , a.update_user_id
              , a.create_dt
+             , a.update_user_id
              , a.update_dt
-          from com_etr_mst a /* T. 대외 거래 마스터 */
-         where a.tr_cd = #{trCd}
-           and a.seq = #{seq}
+          from com_etr_mst a      /* T. 대외 거래 마스터 */
+         where 1 = 1
+           and 2 = 2
+           and tr_stat_cd in ('01', '03')  /* 거래상태코드 [01:요청, 02: 전송, 03:타임아웃, 04:취소, 05:수신] */
+           and tr_res_cd  in ('00')        /* 거래결과코드 [00:진행중, 01:성공, 02:실패] */
+           and tr_id = #{trId}
     </select>
 
-    <insert id="insert">
+    <select id="selectOneIsOnlyValidMe" resultType="Boolean">
+        select /* com@selectOneIsOnlyValidMe@대외 거래 전문, 현재 입력 받은 seq 만이 유효한 전문인지*/
+               case when count(1) > 1
+                         then false
+                         else true
+               end as validYn
+          from com_etr_mst a      /* T. 대외 거래 마스터 */
+         where tr_stat_cd in ('01', '02', '05')  /* 거래상태코드 [01:요청, 02: 전송, 03:타임아웃, 04:취소, 05:수신] */
+           and tr_res_cd  in ('00', '01')        /* 거래결과코드 [00:진행중, 01:성공, 02:실패] */
+           and user_id = #{userId}
+           and tr_id = #{trId}
+           and seq != #{seq}
+    </select>
+
+    <select id="selectOneForValid" resultType="Boolean">
+        select /* com@selectOneForValid@동일 사용자/전문 전송중 여부 조회 */
+               case when count(1) > 1
+                         then true
+                         else false
+               end as existYn
+          from com_etr_mst a      /* T. 대외 거래 마스터 */
+         where 1 = 1
+           and (   tr_stat_cd in ('02')   /* 거래상태코드 [01:요청, 02: 전송, 03:타임아웃, 04:취소, 05:수신] */
+                and tr_res_cd  in ('01')  /* 거래결과코드 [00:진행중, 01:성공, 02:실패] */
+               )
+           and user_id = #{userId}
+           and tr_id = #{trId}
+           limit 1
+    </select>
+
+    <select id="insertEtr" resultType="Int">
         insert /* com@insert@대외 거래 생성 */
           into com_etr_mst /* T. 대외 거래 마스터 */
-          ( tr_cd
-
+          (
+            tr_id
+          , tr_stat_cd
+          , user_id
+          , body
+          , create_user_id
           )
-        values ( #{userId}
-               , #{acctStgCd}
+        values (
+                 #{trId}
+               , #{trStatCd}
+               , #{userId}
+               , #{body}::json
+               , #{createUserId}
                )
-    </insert>
-
-    <insert id="update">
-        update /* com@update@대외 거래 수정 */
-               com_etr_mst /* T. 대외 거래 마스터 */
---            set
---          where user_id = #{userId}
-    </insert>
-
+               returning seq
+    </select>
 </mapper>

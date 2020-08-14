@@ -56,7 +56,7 @@ class Advice {
         // Main --------------------------------------------------------------------------------------------------------
         log.info("[${commons.gid}] >>>>>  controller start [$signatureName() from [${req.remoteAddr}] by ${req.method} ${req.requestURI}")
         try {
-            val elapsed = measureTimeMillis {
+            area.commons.elapsed = measureTimeMillis {
                 result = pjp.proceed()
             }
         } catch (e: Exception) {
@@ -203,7 +203,7 @@ class Advice {
             "with $args"
         } else ""
 
-        log.info(" >>>>>  service start   [$serviceFullName()] $withArgs ")
+        log.debug(" >>>>>  service start   [$serviceFullName()] $withArgs ")
 
         // Main --------------------------------------------------------------------------------------------------------
         try {
@@ -221,7 +221,7 @@ class Advice {
                 else -> ""
             }
 
-            log.info(" >>>>>  service   end   [$serviceFullName()] [${elapsed}ms] $returnForLog")
+            log.debug(" >>>>>  service   end   [$serviceFullName()] [${elapsed}ms] $returnForLog")
         }
 
         // End ---------------------------------------------------------------------------------------------------------
