@@ -86,7 +86,9 @@ class AuthService : BaseService() {
         )
     }
 
-    // 유효한 토큰인가?
+    /**
+     * 유효한 토큰인가?
+     */
     fun isValidToken(jwt: String?): Boolean {
         return try {
             if (jwt == null) return false

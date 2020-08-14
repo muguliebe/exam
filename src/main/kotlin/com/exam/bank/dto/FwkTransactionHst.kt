@@ -6,19 +6,19 @@ import java.time.OffsetDateTime
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class TransactionHst(
-        var transactionDate: LocalDate = LocalDate.now(),
-        var gid: String = "",
-        var method: String = "",
-        var path: String = "",
-        var startTime: String? = null,
-        var endTime: String? = null,
-        var elapsed: Long? = null,
-        var referrer: String? = null,
-        var remoteIp: String = "",
-        var statCode: String? = null,
-        var queryString: String? = null,
-        var body: String? = null,
-        var errMsg: String? = null,
-        var createUserId: Int? = null,
-        var createDt: OffsetDateTime? = null
+        var transactionDate: LocalDate = LocalDate.now(), // 거래 일자
+        var gid: String = "",                             // 글로벌 ID
+        var method: String = "",                          // HTTP Method ( GET, PUT.. )
+        var path: String = "",                            // API URL
+        var startTime: String? = null,                    // 거래 시작 시간 (yyMMdd)
+        var endTime: String? = null,                      // 거래 종료 시간
+        var elapsed: Long? = null,                        // 수행 시간 (ms)
+        var referrer: String? = null,                     // 호출 URL
+        var remoteIp: String = "",                        // 호출지 IP
+        var statCode: String? = null,                     // HTTP 상태 코드 (200, 500..)
+        var queryString: String? = null,                  // HTTP Query String
+        var body: String? = null,                         // HTTP Input Body
+        var errMsg: String? = null,                       // 에러 메시지
+        var createUserId: Int? = null,                    // 생성자 ID
+        var createDt: OffsetDateTime? = null              // 생성 일시
 )

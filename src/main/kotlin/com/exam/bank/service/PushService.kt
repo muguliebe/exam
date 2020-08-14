@@ -38,7 +38,6 @@ class PushService : BaseService() {
         val inSave = ComPushMst()
         inSave.pushId = pushId.toString()
         inSave.userId = userId
-
         inSave.createDt = DateUtils.currentTimeStamp()
         inSave.createUserId = area.commons.user?.userId
 

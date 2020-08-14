@@ -1,11 +1,13 @@
 package com.exam.bank.entity
 
+import org.springframework.context.annotation.Description
 import java.time.OffsetDateTime
 import java.util.*
 import javax.persistence.*
 
 @Entity
 @Table(name = "com_etr_mst")
+@Description("전문요청 마스터")
 data class ComEtrMst(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         var seq: Int = 0                          // 순번

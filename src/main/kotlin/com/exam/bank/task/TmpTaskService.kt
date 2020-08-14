@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 
+/**
+ * schedule 테스트용
+ * - 1분 마다 DB 연결 Check
+ */
 @Service
 class TmpTaskService : BaseService() {
 

@@ -15,11 +15,10 @@ class EmbeddedDataSource {
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @Bean(name = ["embeddedDatasource"])
     fun memoryPg(): DataSource {
-        val ds = EmbeddedPostgres.builder()
+        return EmbeddedPostgres.builder()
                 .setServerConfig("timezone", "Asia/Seoul")
                 .setPort(62501)
                 .start().postgresDatabase
-        return ds
     }
 
 }

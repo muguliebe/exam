@@ -36,7 +36,7 @@ class AcctService : BaseService() {
      */
     fun authIcFirst(input: AuthIcFirstIn): AuthIcOut {
 
-        // init
+        // Init --------------------------------------------------------------------------------------------------------
         val userId = area.commons.user!!.userId
 
         // validation: 기존 인증 단계 조회
@@ -44,6 +44,7 @@ class AcctService : BaseService() {
         if (stgCd != null && stgCd >= "B0")
             throw BizException("신분증 인증을 기 완료한 고객 입니다.")
 
+        // Main --------------------------------------------------------------------------------------------------------
         // 인증단계 저장 [A0: 신분증 제출 필요 및 진행중]
         if (stgCd == null)
             mapperAcct.insertAcctStg(userId, "A0")
@@ -53,14 +54,13 @@ class AcctService : BaseService() {
                 url = "$apUrl/auth/ic",
                 json = mapOf("image" to input.image)
         )
-        log.debug("ap status=${res.statusCode} result=${res.jsonObject}")
 
         if (res.statusCode != 200 || res.jsonObject["result"] != "OK") {
             throw BizException("재촬영 시도 해 주세요.")
         }
 
-        // 인증단계 저장 [A1: 신분증 제출 및 인증 완료]
-        updateAcctStgByFlow(userId, "A1")
+        // End ---------------------------------------------------------------------------------------------------------
+        updateAcctStgByFlow(userId, "A1") // 인증단계 저장 [A1: 신분증 제출 및 인증 완료]
 
         return Gson().fromJson(res.jsonObject.toString(), AuthIcOut::class.java)
 
@@ -72,7 +72,7 @@ class AcctService : BaseService() {
      */
     fun authIcSecond(input: AuthIcSecondIn) {
 
-        // init
+        // Init --------------------------------------------------------------------------------------------------------
         val userId = area.commons.user!!.userId
 
         // validation
@@ -83,19 +83,19 @@ class AcctService : BaseService() {
         if (stgCd >= "B0")
             throw BizException("신분증 인증을 기 완료한 고객 입니다.")
 
+        // Main --------------------------------------------------------------------------------------------------------
         // 고객 AP 호출: 고객정보 Update
         val res = khttp.post(
                 url = "$apUrl/cln/auth-info",
                 json = mapOf("name" to input.name, "ci" to input.ci)
         )
-        log.debug("ap status=${res.statusCode}")
 
         if (res.statusCode != 200) {
             throw BizException("고객 정보 저장 중 에러 발생. 재시도 해주세요.")
         }
 
-        // 인증단계 저장[B0: 이체 계좌입력 필요]
-        updateAcctStgByFlow(userId, "B0")
+        // End ---------------------------------------------------------------------------------------------------------
+        updateAcctStgByFlow(userId, "B0") // 인증단계 저장[B0: 이체 계좌입력 필요]
 
     }
 
@@ -105,12 +105,11 @@ class AcctService : BaseService() {
      */
     fun procExtAcctAuth(input: T1Body): ReqExtBankOut {
 
-        // init
+        // Init --------------------------------------------------------------------------------------------------------
         val userId = area.commons.user!!.userId
+        val stgCd = mapperAcct.selectOneAcctStg(userId)      // 현재 인증 단계 조회
 
         // validation
-        val stgCd = mapperAcct.selectOneAcctStg(userId)
-
         if (stgCd == null || stgCd < "B0")                   // IF 해당 사용자 인증 단계가 B0[계좌 입력 필요, 신분증OK] 이전 이라면
             throw BizException("신분증 촬영 부터 진행 해 주세요.")
 
@@ -125,11 +124,12 @@ class AcctService : BaseService() {
         if (user == null)
             throw BizException("당행 고객 정보를 찾지 못하였습니다. 고객센터에 문의 해 주세요.")
 
-        // 타행 계좌 명의 조회
+        // Main --------------------------------------------------------------------------------------------------------
         input.userId = userId
         input.userNm = user.userNm
-        reqExtAcct(input)
+        reqExtAcct(input)           // 타행 계좌 명의 조회
 
+        // End ---------------------------------------------------------------------------------------------------------
         return ReqExtBankOut(result = "OK")
     }
 
@@ -154,8 +154,8 @@ class AcctService : BaseService() {
      */
     fun recvT1(resNm: String, userId: Int, bankCd: String, acctNo: String): Boolean {
 
-        // 사용자 조회
-        val user = serviceUser.getUserById(userId)
+        // Init --------------------------------------------------------------------------------------------------------
+        val user = serviceUser.getUserById(userId) // 사용자 조회
         if (user == null) {
             log.error("[B1-B2] 계좌 명의 조회 중 에러 발생.")
             return false
@@ -163,20 +163,14 @@ class AcctService : BaseService() {
 
         // validation
         if (resNm != user.userNm) {                             // IF 명의가 일치하지 않는다면
-            servicePush.regPush(PushService.PUSH_ID.P2, userId) //   P3: 명의가 일치하지 않습니다. 다른 계좌로 진행 해 주세요.
+            servicePush.regPush(PushService.PUSH_ID.P3, userId) //   P3: 명의가 일치하지 않습니다. 다른 계좌로 진행 해 주세요.
             updateAcctStgByFlow(userId, "B0")                   //   인증단계 저장[B0: 이체 계좌입력 필요]
             return false
         }
 
-        if (resNm == user.userNm)
-            log.info("명의 일치 ${user.userNm}")
-        else
-            log.info("명의 불일치 ${user.userNm} with $resNm")
-
-        // main: 명의가 일치하는 경우
-        serviceExt.cancelEtr(TR_ID.T1, userId)                  // T1 전문 모두 취소
-        servicePush.regPush(PushService.PUSH_ID.P2, userId)     // 사용자 푸쉬: P1: 타행 계좌 명의 확인 완료. 다음단계 진행.
-
+        // Main --------------------------------------------------------------------------------------------------------
+        serviceExt.cancelEtr(TR_ID.T1, userId)                          // T1 전문 모두 취소
+        servicePush.regPush(PushService.PUSH_ID.P2, userId)             // 사용자 푸쉬: P2: 타행 계좌 명의 확인 완료. 다음단계 진행.
 
         // T2 전문 등록
         val input = T2Body(bankCd, acctNo, createWord(userId), userId)  // 해당 사용자의 인증단어 생성
@@ -184,6 +178,7 @@ class AcctService : BaseService() {
         serviceExt.regExtTr(TR_ID.T2, userId, body)                     // T2 전문 요청 등록, 이후 ExtTaskService 에서 전문 처리
         updateAcctStgByFlow(userId, "B2")                               // 인증단계 저장[B2: 이체 대기 중]
 
+        // End ---------------------------------------------------------------------------------------------------------
         return true
     }
 
@@ -205,13 +200,12 @@ class AcctService : BaseService() {
      */
     fun updateAcctStgByFlow(userId: Int, inStgCd: String, isForce: Boolean = false) {
 
-        val curStgCd = mapperAcct.selectForUpdate(userId)
+        val curStgCd = mapperAcct.selectForUpdate(userId) // 현재 인증 단계 조회
 
-        log.info("*** $curStgCd --> $inStgCd")
         val isValid = when {
             curStgCd == null -> true
-            (curStgCd >= "B0") && (inStgCd < "B0") -> false // 계좌 입력 단계로 넘어가면, 신분증 단계로 내려가는 것 불가
-            (curStgCd == "B2") && (inStgCd < "B2") -> false // 이체 대기 중일 땐, 이하 단계로 수정 불가
+            (curStgCd >= "B0") && (inStgCd < "B0") -> false  // 계좌 입력 단계로 넘어가면, 신분증 단계로 내려가는 것 불가
+            (curStgCd == "B2") && (inStgCd < "B2") -> false  // 이체 대기 중일 땐, 이하 단계로 수정 불가
             (curStgCd == "B3") && (inStgCd <= "B3") -> false // 이체 시작 되었을 때, 다시 이체 시작이 될 수 없다.
             else -> true
         }
@@ -221,7 +215,7 @@ class AcctService : BaseService() {
             return
         }
 
-        mapperAcct.updateAcctStg(userId, inStgCd)
+        mapperAcct.updateAcctStg(userId, inStgCd) // db update: 인증 단계 변경
     }
 
     /**
@@ -245,7 +239,7 @@ class AcctService : BaseService() {
         mapperAcct.updateEtcCtn(input.userId, etcCtn)
 
         // 사용자에게 푸쉬
-        servicePush.regPush(PushService.PUSH_ID.P3, input.userId)
+        servicePush.regPush(PushService.PUSH_ID.P4, input.userId) // P4: 계좌 이체 적요란의 단어를 입력하시어요.
 
         return true
 

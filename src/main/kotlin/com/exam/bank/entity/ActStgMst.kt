@@ -1,10 +1,12 @@
 package com.exam.bank.entity
 
+import org.springframework.context.annotation.Description
 import java.time.OffsetDateTime
 import javax.persistence.*
 
 @Entity
 @Table(name = "act_stg_mst")
+@Description("인증단계 마스터")
 data class ActStgMst(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         var userId: Int = 0                       // 사용자 ID
