@@ -83,8 +83,8 @@ src                       ---- 소스 Root
 test                      ---- 테스트 Root
    └ http                      └ http 파일로 작성된 테스트
    └ kotlin                    └ 코틀린으로 작성된 테스트 소스
-   | └ com.exam                  |  └ Exam Main Package
-   |   |  └ base                 |     |   모든 테스트 소스에서 상속 받아야 하는 클래스
-   |   |  └ controller           |     |   콘트롤러 테스트
+   | └ com.exam.bank             |  └ Exam Main Package
+   |   |  └ base                 |     |   └ 모든 테스트 소스에서 상속 받아야 하는 클래스
+   |   |  └ controller           |     |   └ 콘트롤러 테스트
 ```
 
