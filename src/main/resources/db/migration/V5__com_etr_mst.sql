@@ -20,9 +20,15 @@ create index idx_com_etr_mst_3 on com_etr_mst (tr_dy, user_id);
 
 comment on table com_etr_mst is '대외 거래 마스터';
 comment on column com_etr_mst.tr_id is '거래 ID';
+comment on column com_etr_mst.tr_id is '거래 일자';
 comment on column com_etr_mst.seq is '순번';
 comment on column com_etr_mst.tr_stat_cd is '거래상태코드 [01:요청, 02: 전송, 03:타임아웃, 04:취소, 05:수신]';
 comment on column com_etr_mst.tr_res_cd is '거래결과코드 [00:진행중, 01:성공, 02:실패]';
 comment on column com_etr_mst.user_id is '사용자 ID';
+comment on column com_etr_mst.create_user_id is '생성자 ID';
+comment on column com_etr_mst.update_user_id is '수정자 ID';
+comment on column com_etr_mst.create_dt is '생성일시';
+comment on column com_etr_mst.update_dt is '수정일시';
+
 
 

@@ -1,7 +1,14 @@
+########################################################################################################################
+# 1번 유저로 모든 API 테스트
+########################################################################################################################
+
 ### 거래내역 조회
 GET http://localhost:5000/tr
 
-### 로그인 -> 토큰 정보
+### 인증 월별 집계
+GET http://localhost:5000/tr-stat
+
+### 1. 로그인 -> 토큰 정보
 POST http://localhost:5000/auth/sign-in
 Content-Type: application/json
 
@@ -13,7 +20,7 @@ Content-Type: application/json
 GET http://localhost:5000/acct/auth-stage
 Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb20uZXhhbSIsImV4cCI6MTY4Mzc5Njc2NSwidXNlcklkIjoxLCJpYXQiOjE1OTczOTY3NjUsImVtYWlsIjoiMUBhLmNvbSJ9.ikabs6w8QPJ92eIInlTlGlAECHK-ntJ-O3lZbtAZCjI
 
-### 신분증 인증: 1단계(이미지 제출)
+### 2. 신분증 인증: 1단계(이미지 제출)
 POST http://localhost:5000/acct/auth/a1
 Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb20uZXhhbSIsImV4cCI6MTY4Mzc5Njc2NSwidXNlcklkIjoxLCJpYXQiOjE1OTczOTY3NjUsImVtYWlsIjoiMUBhLmNvbSJ9.ikabs6w8QPJ92eIInlTlGlAECHK-ntJ-O3lZbtAZCjI
 Content-Type: application/json
@@ -22,7 +29,7 @@ Content-Type: application/json
   "image": "test"
 }
 
-### 신분증 인증: 2단계(교정 정보 제출)
+### 3. 신분증 인증: 2단계(교정 정보 제출)
 POST http://localhost:5000/acct/auth/a2
 Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb20uZXhhbSIsImV4cCI6MTY4Mzc5Njc2NSwidXNlcklkIjoxLCJpYXQiOjE1OTczOTY3NjUsImVtYWlsIjoiMUBhLmNvbSJ9.ikabs6w8QPJ92eIInlTlGlAECHK-ntJ-O3lZbtAZCjI
 Content-Type: application/json
@@ -43,8 +50,6 @@ Content-Type: application/json
   "acctNo": "123123123"
 }
 
-###
-
 ### 단어 인증
 POST http://localhost:5000/acct/auth/c1
 Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb20uZXhhbSIsImV4cCI6MTY4Mzc5Njc2NSwidXNlcklkIjoxLCJpYXQiOjE1OTczOTY3NjUsImVtYWlsIjoiMUBhLmNvbSJ9.ikabs6w8QPJ92eIInlTlGlAECHK-ntJ-O3lZbtAZCjI
@@ -55,4 +60,3 @@ Content-Type: application/json
 }
 
 ###
-

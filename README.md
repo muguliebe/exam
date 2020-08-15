@@ -40,7 +40,9 @@
     - src > resources > db > migration 에 위치
     - flyway 로 자동 수행
 - Test
-    - src > test > http > basic.http 파일로 JetBrain 계열 IDE 에서 구동
+    - src > test > http 파일로 JetBrain 계열 IDE 에서 구동
+    - basic.http: 1번 유저로 단계별 수행
+    - z1~z5.http: 인증에 필요한 API 를 1~5 번 모든 유저로 단계별 수행
     - 토큰: application 구동 시 화면 로그에 표기
     - 기 발행된 토큰 리스트
 

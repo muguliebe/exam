@@ -22,4 +22,8 @@ class MainController : BaseController() {
     @ApiOperation(value = "거래내역 조회")
     fun getTr() = serviceTr.getTransactions()
 
+    @GetMapping("/tr-stat")
+    @ApiOperation(value = "거래내역 인증 월별 집계")
+    fun getTrAuthStat() = serviceTr.getTrAuthStat()
+
 }

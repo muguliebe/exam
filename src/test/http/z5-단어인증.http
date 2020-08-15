@@ -1,0 +1,48 @@
+### 단어 인증 : 유저 1
+POST http://localhost:5000/acct/auth/c1
+Authorization: {{Authorization1}}
+Content-Type: application/json
+
+{
+  "etcCtn": "aaaa"
+}
+
+### 단어 인증 : 유저 2
+POST http://localhost:5000/acct/auth/c1
+Authorization: {{Authorization2}}
+Content-Type: application/json
+
+{
+  "etcCtn": "aaaa"
+}
+
+### 단어 인증 : 유저 3
+POST http://localhost:5000/acct/auth/c1
+Authorization: {{Authorization3}}
+Content-Type: application/json
+
+{
+  "etcCtn": "aaaa"
+}
+
+### 단어 인증 : 유저 4
+POST http://localhost:5000/acct/auth/c1
+Authorization: {{Authorization4}}
+Content-Type: application/json
+
+{
+  "etcCtn": "aaaa"
+}
+
+### 단어 인증 : 유저 5
+POST http://localhost:5000/acct/auth/c5
+Authorization: {{Authorization5}}
+Content-Type: application/json
+
+{
+  "etcCtn": "aaaa"
+}
+
+###
+
+

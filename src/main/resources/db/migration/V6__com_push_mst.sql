@@ -16,4 +16,7 @@ comment on column com_push_mst.seq is '순번';
 comment on column com_push_mst.push_id is '푸쉬 ID';
 comment on column com_push_mst.user_id is '사용자 ID';
 comment on column com_push_mst.dlv_yn is '전달 여부';
+comment on column com_push_mst.create_user_id is '생성자 ID';
+comment on column com_push_mst.create_dt is '생성일시';
+
 

@@ -136,6 +136,7 @@ class Advice {
             path == "/ping" -> true
             path == "/auth/sign-in" -> true
             path == "/tr" -> true
+            path == "/tr-stat" -> true
             path.startsWith("/tmp") -> true
             else -> false
         }

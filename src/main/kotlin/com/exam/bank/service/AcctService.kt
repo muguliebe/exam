@@ -185,7 +185,8 @@ class AcctService : BaseService() {
     /**
      * 인증단어 생성
      */
-    fun createWord(userId: Int): String = StringUtils.getRandomString(4)
+//    fun createWord(userId: Int): String = StringUtils.getRandomString(4)
+    fun createWord(userId: Int): String = "aaaa"
 
     /**
      * 인증 단계 수정

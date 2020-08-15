@@ -19,3 +19,7 @@ create table fwk_transaction_hst
 );
 comment on table fwk_transaction_hst is '거래내역';
 create index idx_tr_hst on fwk_transaction_hst (tr_dy);
+
+comment on column fwk_transaction_hst.tr_dy is '거래 일자';
+comment on column fwk_transaction_hst.create_user_id is '생성자 ID';
+comment on column fwk_transaction_hst.create_dt is '생성일시';

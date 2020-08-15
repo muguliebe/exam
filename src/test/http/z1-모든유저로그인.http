@@ -1,0 +1,56 @@
+########################################################################################################################
+### 모든 사용자 로그인
+########################################################################################################################
+
+### 1번 유저 로그인
+POST http://localhost:5000/auth/sign-in
+Content-Type: application/json
+
+{
+  "email": "1@a.com"
+}
+
+> {% client.global.set("Authorization1", response.body.jwt); %}
+
+
+### 2번 유저 로그인
+POST http://localhost:5000/auth/sign-in
+Content-Type: application/json
+
+{
+  "email": "2@a.com"
+}
+
+> {% client.global.set("Authorization2", response.body.jwt); %}
+
+### 3번 유저 로그인
+POST http://localhost:5000/auth/sign-in
+Content-Type: application/json
+
+{
+  "email": "3@a.com"
+}
+
+> {% client.global.set("Authorization3", response.body.jwt); %}
+
+### 4번 유저 로그인
+POST http://localhost:5000/auth/sign-in
+Content-Type: application/json
+
+{
+  "email": "4@a.com"
+}
+
+> {% client.global.set("Authorization4", response.body.jwt); %}
+
+### 5번 유저 로그인
+POST http://localhost:5000/auth/sign-in
+Content-Type: application/json
+
+{
+  "email": "5@a.com"
+}
+
+> {% client.global.set("Authorization5", response.body.jwt); %}
+
+###

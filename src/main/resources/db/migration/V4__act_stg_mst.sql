@@ -14,4 +14,9 @@ comment on table act_stg_mst is '계좌 단계 내역';
 comment on column act_stg_mst.user_id is '사용자 ID';
 comment on column act_stg_mst.acct_stg_cd is '계좌 단계 코드';
 comment on column act_stg_mst.etc_ctn is '적요 내용 (인증단어)';
+comment on column act_stg_mst.create_user_id is '생성자 ID';
+comment on column act_stg_mst.update_user_id is '수정자 ID';
+comment on column act_stg_mst.create_dt is '생성일시';
+comment on column act_stg_mst.update_dt is '수정일시';
+
 

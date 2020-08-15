@@ -1,6 +1,7 @@
 package com.exam.fwk.custom.service
 
 import com.exam.bank.dto.FwkTransactionHst
+import com.exam.bank.dto.GetTrAuthStatOut
 import com.exam.bank.repo.mybatis.TransactionMapper
 import com.exam.fwk.core.base.BaseService
 import com.exam.fwk.custom.pojo.CommonArea
@@ -57,4 +58,9 @@ class TransactionService : BaseService() {
         // insert
         mapper.insertTransaction(tr)
     }
+
+    /**
+     * 인증 집계
+     */
+    fun getTrAuthStat(): List<GetTrAuthStatOut> = mapper.selectTrAuthStat()
 }

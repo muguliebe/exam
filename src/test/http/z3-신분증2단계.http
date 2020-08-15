@@ -1,0 +1,54 @@
+### 신분증 인증: 2단계(교정 정보 제출) : 유저 1
+POST http://localhost:5000/acct/auth/a2
+Authorization: {{Authorization1}}
+Content-Type: application/json
+
+{
+  "name": "test",
+  "no": 123123123,
+  "ci": "123123123123"
+}
+
+### 신분증 인증: 2단계(교정 정보 제출) : 유저 2
+POST http://localhost:5000/acct/auth/a2
+Authorization: {{Authorization2}}
+Content-Type: application/json
+
+{
+  "name": "test",
+  "no": 123123123,
+  "ci": "123123123123"
+}
+### 신분증 인증: 2단계(교정 정보 제출) : 유저 3
+POST http://localhost:5000/acct/auth/a2
+Authorization: {{Authorization3}}
+Content-Type: application/json
+
+{
+  "name": "test",
+  "no": 123123123,
+  "ci": "123123123123"
+}
+### 신분증 인증: 2단계(교정 정보 제출) : 유저 4
+POST http://localhost:5000/acct/auth/a2
+Authorization: {{Authorization4}}
+Content-Type: application/json
+
+{
+  "name": "test",
+  "no": 123123123,
+  "ci": "123123123123"
+}
+### 신분증 인증: 2단계(교정 정보 제출) : 유저 5
+POST http://localhost:5000/acct/auth/a2
+Authorization: {{Authorization5}}
+Content-Type: application/json
+
+{
+  "name": "test",
+  "no": 123123123,
+  "ci": "123123123123"
+}
+
+###
+

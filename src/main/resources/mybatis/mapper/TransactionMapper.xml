@@ -63,4 +63,38 @@
         )
     </insert>
 
+    <select id="selectTrAuthStat" resultType="GetTrAuthStatOut">
+        select /* act@selectAuthStat@인증단계 통계 조회 */
+               to_char(a.create_dt, 'YYYY-MM') as statMm
+                , sum(case when a.path in ('/acct/auth/a1', '/acct/auth/a2') and a.status_code::integer = 200
+                              then 1
+                              else 0
+                       end) as "cntSuccessId" /* 신분증 성공 건수 */
+                , sum(case when a.path in ('/acct/auth/a1', '/acct/auth/a2') and a.status_code::integer != 200
+                              then 1
+                              else 0
+                       end) as "cntFailId" /* 신분증 실패 건수 */
+                , sum(case when a.path in ('/acct/auth/b1', '/acct/auth/b2') and a.status_code::integer = 200
+                               then 1
+                               else 0
+                      end) as "cntSuccessSend" /* 이체 성공 건수 */
+                , sum(case when a.path in ('/acct/auth/b1', '/acct/auth/b2') and a.status_code::integer != 200
+                               then 1
+                               else 0
+                       end) as "cntFailSend" /* 이체 실패 건수 */
+                , sum(case
+                          when a.path in ('/acct/auth/c1') and a.status_code::integer = 200
+                              then 1
+                              else 0
+                       end) as "cntSuccessWord" /* 단어 성공 건수 */
+                , sum(case
+                          when a.path in ('/acct/auth/c1') and a.status_code::integer != 200
+                              then 1
+                              else 0
+                       end) as "cntFailWord" /* 단어 실패 건수 */
+             from fwk_transaction_hst a /* T. 거래내역 */
+            group by to_char(a.create_dt, 'YYYY-MM')
+
+    </select>
+
 </mapper>

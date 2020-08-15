@@ -1,0 +1,48 @@
+### 신분증 인증: 1단계(이미지 제출) : 1번 유저
+POST http://localhost:5000/acct/auth/a1
+Authorization: {{Authorization1}}
+Content-Type: application/json
+
+{
+  "image": "test"
+}
+
+### 신분증 인증: 1단계(이미지 제출) : 2번 유저
+POST http://localhost:5000/acct/auth/a1
+Authorization: {{Authorization2}}
+Content-Type: application/json
+
+{
+  "image": "test"
+}
+
+### 신분증 인증: 1단계(이미지 제출) : 3번 유저
+POST http://localhost:5000/acct/auth/a1
+Authorization: {{Authorization3}}
+Content-Type: application/json
+
+{
+  "image": "test"
+}
+
+### 신분증 인증: 1단계(이미지 제출) : 4번 유저
+POST http://localhost:5000/acct/auth/a1
+Authorization: {{Authorization4}}
+Content-Type: application/json
+
+{
+  "image": "test"
+}
+
+### 신분증 인증: 1단계(이미지 제출) : 5번 유저
+POST http://localhost:5000/acct/auth/a1
+Authorization: {{Authorization5}}
+Content-Type: application/json
+
+{
+  "image": "test"
+}
+
+###
+
+
