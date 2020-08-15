@@ -85,6 +85,7 @@ class ExtService : BaseService() {
                 onError = {
                     when (message) {
                         "Read timed out" -> {
+                            log.warn("T1 전문: [$seq] 타임아웃 발생")
                             mapper.updateEtrTimeout(seq)                  // 대외 전문 타임아웃으로 변경
                         }
                         else -> {
@@ -158,6 +159,7 @@ class ExtService : BaseService() {
                         when (message) {
                             "Read timed out" -> {                  // WHEN 에러가 타임아웃 때문이라면
                                 mapper.updateEtrTimeout(input.seq) //  대외 전문 상태 [03:타임아웃]으로 변경
+                                log.warn("T2 전문: [${input.seq}] 타임아웃 발생")
 
                                 // [03:타임아웃] 되었지만, 특정 사용자의 T2 전문만이 유효한 것이라면 인증단계코드를 [B2:이체 대기] 로 돌린다.
                                 if (mapper.selectOneIsOnlyValidMe(input.seq, TR_ID.T2.name, input.body.userId))

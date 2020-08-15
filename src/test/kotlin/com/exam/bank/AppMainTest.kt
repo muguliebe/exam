@@ -10,10 +10,4 @@ class AppMainTest : BaseSpringTest() {
         log.info("부팅 끝")
     }
 
-    @Test
-    fun `what`(){
-        val res = rest.getForEntity("/ping", String::class.java)
-
-    }
-
 }

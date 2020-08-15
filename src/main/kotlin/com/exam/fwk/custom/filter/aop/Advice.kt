@@ -203,7 +203,7 @@ class Advice {
             "with $args"
         } else ""
 
-        log.debug(" >>>>>  service start   [$serviceFullName()] $withArgs ")
+        log.info(" >>>>>  service start   [$serviceFullName()] $withArgs ")
 
         // Main --------------------------------------------------------------------------------------------------------
         try {
@@ -221,7 +221,7 @@ class Advice {
                 else -> ""
             }
 
-            log.debug(" >>>>>  service   end   [$serviceFullName()] [${elapsed}ms] $returnForLog")
+            log.info(" >>>>>  service   end   [$serviceFullName()] [${elapsed}ms] $returnForLog")
         }
 
         // End ---------------------------------------------------------------------------------------------------------

@@ -57,6 +57,9 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
+    testImplementation("org.junit.platform:junit-platform-runner:1.0.0")
+    testImplementation("org.junit.platform:junit-platform-launcher:1.0.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.0.0")
 }
 
 tasks.withType<Test> {
@@ -69,3 +72,4 @@ tasks.withType<KotlinCompile> {
         jvmTarget = "1.8"
     }
 }
+
