@@ -1,7 +1,7 @@
 # Spec
 - JDK: 1.8
 - Framework: Spring Boot
-- DB: Postgres
+- DB: Postgres ( Embedded )
 - LANG: Kotlin
 
 # 전체 흐름도
@@ -36,6 +36,21 @@
     - 62501
     - 변경 필요 시 EmbeddedDataSource 소스에서 변경 합니다.
     - setPort 를 제거 시 랜덤 포트 이며, 부팅 시 로그에 표기가 됩니다.
+- DML
+    - src > resources > db > migration 에 위치
+    - flyway 로 자동 수행
+- Test
+    - src > test > http > basic.http 파일로 JetBrain 계열 IDE 에서 구동
+    - 토큰: application 구동 시 화면 로그에 표기
+    - 기 발행된 토큰 리스트
+
+        | id  | email   | JWT                                                                                                                                                                                           |
+        |-----|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+        |  1  | 1@a.com | eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb20uZXhhbSIsImV4cCI6MTY4Mzg2NzE5NywidXNlcklkIjoxLCJpYXQiOjE1OTc0NjcxOTcsImVtYWlsIjoiMUBhLmNvbSJ9.wEkOCa9SJaMltNcYEDZwvAAFLlbc-IcqloocXGcI-eY |
+        |  2  | 2@a.com | eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb20uZXhhbSIsImV4cCI6MTY4Mzg2NzE5NywidXNlcklkIjoyLCJpYXQiOjE1OTc0NjcxOTcsImVtYWlsIjoiMkBhLmNvbSJ9.TapvilwiqJeBJxlt_xEZSIz8R1dJZnAoktrkUL3vQkw |
+        |  3  | 3@a.com | eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb20uZXhhbSIsImV4cCI6MTY4Mzg2NzE5NywidXNlcklkIjozLCJpYXQiOjE1OTc0NjcxOTcsImVtYWlsIjoiM0BhLmNvbSJ9.JQBsxTsDQ3GmS3OQ7Ax2oS-KGYJbNUUSlViy8lOc6O4 |
+        |  4  | 4@a.com | eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb20uZXhhbSIsImV4cCI6MTY4Mzg2NzE5NywidXNlcklkIjo0LCJpYXQiOjE1OTc0NjcxOTcsImVtYWlsIjoiNEBhLmNvbSJ9.4UT2WEUCMnsD-TmqxRN_WTSZmTmEgAnVljqpjSOU4LE |
+        |  5  | 5@a.com | eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb20uZXhhbSIsImV4cCI6MTY4Mzg2NzE5NywidXNlcklkIjo1LCJpYXQiOjE1OTc0NjcxOTcsImVtYWlsIjoiNUBhLmNvbSJ9.HvLD9XZEfX5vjDlg7vIJCdqjAsKqv-vLEQqrmbum3tg |
 
 # 소스 구조
 ```
@@ -63,7 +78,7 @@ src                       ---- 소스 Root
  |         └ service           |     |   |
  |         └ util              |     |   └--- 유틸리티
  └ resources                   └  리소스 ( 스프링 부트 설정 + Web + MyBatis Query )
-  └ db                           └  flyway 쿼리 영역 ( 현재 개발중 미사용 )
+  └ db                           └  flyway 쿼리 영역
   └ mybatis                      └  mybatis 쿼리 및 설정
 test                      ---- 테스트 Root
    └ http                      └ http 파일로 작성된 테스트
